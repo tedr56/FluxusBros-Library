@@ -11,6 +11,7 @@
         m
         mn
         show
+        show-d
         gl
         reverse-string
         vector-of
@@ -114,17 +115,15 @@
         (* (midi-ccn channel input) coeff))
 
     (define (show input . other)
-;(display "debug show1")
-;(newline)
-;(display other)
-;(newline)
-;(display input)
-;(newline)
-;(display "debug show2")
-;(newline)
-;        (display (string-join (append (list input) other) " "))
         (display input)
-        (newline))
+        (newline)
+    )
+    (define debug #t)
+    (define (show-d t)
+    	(when debug
+        	(show t)
+    	)
+	)
     (define (gl n (volume (get-gain)))
         (* (log (+ 0.5 (gh n))) volume)
     )
