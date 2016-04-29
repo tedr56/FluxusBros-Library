@@ -449,4 +449,42 @@
     (define (eval-string string)
         (eval (read (open-input-string string)))
     )
+    (define (midi-convert type channel)
+        (let*
+            (
+                (midi-type
+                    (cond
+                        [(eq? type 'CC)
+                            #b1011
+                            ]
+                        [(eq? type 'NoteOn)
+                            #b1001
+                            ]
+                        [(eq? type 'NoteOff)
+                            #b1000
+                            ]
+                        [(eq? type 'ProgramChange)
+                            #b1100
+                            ]
+                        [(eq? type 'PitchBend)
+                            #b1110
+                            ]
+                        [(eq? type 'AfterTouch)
+                            #b1101
+                            ]
+                        [(eq? type 'PolyAfterTouch)
+                            #b1000
+                            ]
+                        )
+                    )
+                (midi-channel
+                    (if (< (- channel 1) 16)
+                        channel
+                        0
+                        )
+                    )
+                )
+            (+ (* midi-type #b10000) (- channel 1))
+            )
+        )
 )
