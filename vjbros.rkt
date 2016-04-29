@@ -446,8 +446,10 @@
             )
         )
     )
-    (define (eval-string string)
-        (eval (read (open-input-string string)))
+    (define (eval-string string (exception (lambda (exn) (displayln (exn-message exn)))))
+         (with-handlers ([exn:fail? exception])
+            (eval (read (open-input-string string)))
+        )
     )
     (define (midi-convert type channel)
         (let*
